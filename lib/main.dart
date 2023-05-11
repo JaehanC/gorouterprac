@@ -1,34 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:routerpractice/screen/home_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:routerpractice/provider/auth_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
-  GoRouter get _router => GoRouter(
-        //홈화면
-        initialLocation: '/',
-        routes: [
-          GoRoute(
-            path: '/',
-            builder: (context, state) => const HomeScreen(),
-          ),
-        ],
-      );
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     //고라우터 설정
     return MaterialApp.router(
-      routeInformationProvider: _router.routeInformationProvider,
-      //uri string을 상태 및 go router에서 사용할 수 있는 형태로 변환해주는 함수
-      routeInformationParser: _router.routeInformationParser,
-      //위에서 변경된 값으로 실제 어떤 라우트를 보여줄지 정하는 함수
-      routerDelegate: _router.routerDelegate,
+      routerConfig: ref.watch(routerProvider),
     );
   }
 }
