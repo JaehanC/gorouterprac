@@ -17,7 +17,7 @@ final routerProvider = Provider<GoRouter>(
       redirect: (context, state) => authStateProvider._redirectLogic(state),
       refreshListenable: authStateProvider,
       //홈화면
-      initialLocation: '/',
+      initialLocation: '/login',
       errorBuilder: (context, state) {
         return ErrorScreen(error: state.error.toString());
       },
@@ -50,7 +50,7 @@ class AuthNotifier extends ChangeNotifier {
 //유저 정보가 없다 - 로그인한 상태가 아니다.
 //유저정보가 없고 로그인하려는 중이 아니라면 로그인 페이지로 이동한다
     if (user == null) {
-      return loginIn ? null : 'login';
+      return loginIn ? null : '/login';
     }
 //유저정보가 있는데 로그인 페이지라면 홈으로 이동
 //위의 이프문을 통과하면 유저정보는 무조건 있는거임
